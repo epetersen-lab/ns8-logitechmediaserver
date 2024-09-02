@@ -1,0 +1,21 @@
+#!/usr/bin/env python3
+
+import os
+import sys
+import json
+import agent
+
+
+data = json.load(sys.stdin)
+
+lms_web_stream_port = os.environ.get('LMS_WEB_STREAM_PORT', '')
+lms_discovery_port = os.environ.get('LMS_DISCOVERY_PORT', '')
+lms_cli_port = os.environ.get('LMS_CLI_PORT', '')
+
+ports =[]
+ports.append(lms_web_stream_port + '/tcp')
+ports.append(lms_discovery_port + '/tcp')
+ports.append(lms_discovery_port + '/udp')
+ports.append(lms_cli_port + '/tcp')
+
+agent.add_public_service(os.environ['MODULE_ID'], ports)

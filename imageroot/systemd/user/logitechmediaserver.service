@@ -1,0 +1,34 @@
+[Unit]
+Description=Podman logitechmediaserver.service
+BindsTo=lms.service
+
+[Service]
+Environment=PODMAN_SYSTEMD_UNIT=%n
+EnvironmentFile=%S/state/environment
+WorkingDirectory=%S/state
+Restart=always
+TimeoutStopSec=70
+ExecStartPre=/bin/rm -f %t/logitechmediaserver.pid %t/logitechmediaserver.ctr-id
+ExecStart=/usr/bin/podman run \
+	--conmon-pidfile %t/logitechmediaserver.pid \
+	--cidfile=%t/logitechmediaserver.ctr-id \
+	--cgroups=no-conmon \
+	--pod-id-file %t/lms.pod-id \
+	--replace \
+	--name=logitechmediaserver \
+	-d \
+	-e HTTP_PORT=9000 \
+	-v config:/config:rw \
+	-v music:/music:ro \
+	-v playlist:/playlist:rw \
+	-v /etc/localtime:/etc/localtime:ro \
+	-v /etc/timezone:/etc/timezone:ro \
+    ${LOGITECHMEDIASERVER_IMAGE}
+ExecStop=/usr/bin/podman stop --ignore -t 10 --cidfile=%t/logitechmediaserver.ctr-id
+ExecStopPost=/usr/bin/podman rm -f --ignore -t 10 --cidfile=%t/logitechmediaserver.ctr-id
+PIDFile=%t/logitechmediaserver.pid
+Type=forking
+
+
+[Install]
+WantedBy=default.target

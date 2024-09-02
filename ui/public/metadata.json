@@ -1,19 +1,19 @@
 {
-  "name": "kickstart",
+  "name": "logitechmediaserver",
   "description": {
-    "en": "My kickstart module"
+    "en": "Logitech Media Server module"
   },
   "categories": [],
   "authors": [
     {
-      "name": "Name Surname",
-      "email": "author@yourmail.org"
+      "name": "Erik Petersen",
+      "email": "eht@it-trans.dk"
     }
   ],
   "docs": {
-    "documentation_url": "https://docs.kickstart.com/",
-    "bug_url": "https://github.com/NethServer/dev",
-    "code_url": "https://github.com/author/ns8-kickstart"
+    "documentation_url": "https://github.com/epetersen-lab/ns8-logitechmediaserver",
+    "bug_url": "https://github.com/epetersen-lab/ns8-logitechmediaserver/issues",
+    "code_url": "https://github.com/epetersen-lab/ns8-logitechmediaserver"
   },
-  "source": "ghcr.io/nethserver/kickstart"
+  "source": "ghcr.io/epetersen-lab/logitechmediaserver"
 }

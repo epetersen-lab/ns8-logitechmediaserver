@@ -1,0 +1,41 @@
+#!/usr/bin/env python3
+
+import errno
+import os
+import socket
+import sys
+import agent
+
+lms_web_stream_port = "9000"
+lms_discovery_port = "3483"
+lms_cli_port = "9090"
+
+agent.set_env("LMS_WEB_STREAM_PORT", lms_web_stream_port)
+agent.set_env("LMS_DISCOVERY_PORT", lms_discovery_port)
+agent.set_env("LMS_CLI_PORT", lms_cli_port)
+
+# set error validation
+agent.set_weight(os.path.basename(__file__), 0)
+
+ports_in_use = []
+for port_str in [lms_web_stream_port, lms_discovery_port, lms_cli_port]:
+    port = int(port_str)
+    try:
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.bind(('', port))
+        sock.close()
+        sock = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
+        sock.bind(('', port))
+        sock.close()
+    except OSError as ex:
+        if ex.errno != errno.EADDRINUSE:
+            raise
+        ports_in_use.append(port)
+
+    if ports_in_use:
+        print(f"Following ports are already in use: {ports_in_use}", file=sys.stderr)
+        sys.exit(1)
+
+# Make sure everything is saved inside the environment file
+# just before starting systemd unit
+agent.dump_env()
