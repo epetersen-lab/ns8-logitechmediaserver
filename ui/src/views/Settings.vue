@@ -25,12 +25,12 @@
           <cv-form @submit.prevent="configureModule">
             <!-- TODO remove test field and code configuration fields -->
             <cv-text-input
-              :label="$t('settings.test_field')"
-              v-model="testField"
-              :placeholder="$t('settings.test_field')"
+              :label="$t('settings.lms_web_stream_port')"
+              v-model="lms_web_stream_port"
+              :placeholder="$t('settings.lms_web_stream_port')"
               :disabled="loading.getConfiguration || loading.configureModule"
-              :invalid-message="error.testField"
-              ref="testField"
+              :invalid-message="error.lmsWebStreamPort"
+              ref="lms_web_stream_port"
             ></cv-text-input>
             <cv-row v-if="error.configureModule">
               <cv-column>
@@ -85,7 +85,7 @@ export default {
         page: "settings",
       },
       urlCheckInterval: null,
-      testField: "", // TODO remove
+      lms_web_stream_port: "9000", // TODO remove
       loading: {
         getConfiguration: false,
         configureModule: false,
@@ -93,7 +93,7 @@ export default {
       error: {
         getConfiguration: "",
         configureModule: "",
-        testField: "", // TODO remove
+        lms_web_stream_port: "", // TODO remove
       },
     };
   },
@@ -161,25 +161,25 @@ export default {
       const config = taskResult.output;
 
       // TODO set configuration fields
-      // ...
+      this.lms_web_stream_port = config.lms_web_stream_port.toString(); 
 
       // TODO remove
       console.log("config", config);
 
       // TODO focus first configuration field
-      this.focusElement("testField");
+      this.focusElement("lms_web_stream_port");
     },
     validateConfigureModule() {
       this.clearErrors(this);
       let isValidationOk = true;
 
       // TODO remove testField and validate configuration fields
-      if (!this.testField) {
+      if (!this.lms_web_stream_port) {
         // test field cannot be empty
-        this.error.testField = this.$t("common.required");
+        this.error.lms_web_stream_port = this.$t("common.required");
 
         if (isValidationOk) {
-          this.focusElement("testField");
+          this.focusElement("lms_web_stream_port");
           isValidationOk = false;
         }
       }
@@ -228,6 +228,7 @@ export default {
           action: taskAction,
           data: {
             // TODO configuration fields
+            lms_web_stream_port: this.lms_web_stream_port,
           },
           extra: {
             title: this.$t("settings.configure_instance", {

@@ -18,4 +18,5 @@ ports.append(lms_discovery_port + '/tcp')
 ports.append(lms_discovery_port + '/udp')
 ports.append(lms_cli_port + '/tcp')
 
+agent.assert_exp(agent.remove_public_service(os.environ['MODULE_ID']))
 agent.add_public_service(os.environ['MODULE_ID'], ports)

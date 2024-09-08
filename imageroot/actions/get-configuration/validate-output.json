@@ -1,0 +1,24 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Get Logitch Media Server configuration",
+    "$id": "http://schema.nethserver.org/traefik/set-route-input.json",
+    "description": "Get Logitech Media Server configuration",
+    "examples": [
+        {
+            "lms_web_stream_port": 9000
+        }
+    ],
+    "type": "object",
+    "required": [
+        "lms_web_stream_port"
+    ],
+    "properties": {
+        "lms_web_stream_port": {
+                "type": "integer",
+                "title": "port",
+                "description": "The port of the LMS Web/Stream service",
+                "minimum": 1024,
+                "maximum": 65535
+        }
+   }
+}

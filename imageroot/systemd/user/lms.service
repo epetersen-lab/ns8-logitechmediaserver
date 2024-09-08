@@ -17,7 +17,7 @@ ExecStartPre=/bin/rm -f %t/lms.pid %t/lms.pod-id
 ExecStartPre=/usr/bin/podman pod create --infra-conmon-pidfile %t/lms.pid \
     --pod-id-file %t/lms.pod-id \
     --name lms \
-    --publish 9000:9000 \
+    --publish ${LMS_WEB_STREAM_PORT}:${LMS_WEB_STREAM_PORT} \
     --publish 9090:9090 \
     --publish 3483:3483/tcp \
     --publish 3483:3483/udp \

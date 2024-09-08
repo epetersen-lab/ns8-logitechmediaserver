@@ -1,0 +1,11 @@
+#!/usr/bin/env python3
+
+import json
+import os
+import sys
+
+config = {}
+config["lms_web_stream_port"] = int(os.environ.get("LMS_WEB_STREAM_PORT", "9005"))
+
+json.dump(config, fp=sys.stdout)
+

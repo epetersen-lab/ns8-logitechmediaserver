@@ -1,0 +1,57 @@
+#!/usr/bin/env python3
+
+import errno
+import json
+import os
+import sys
+import socket
+import sys
+import agent
+
+
+def isPortInUse(port_str: str) -> bool:
+    port = int(port_str)
+    try:
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.bind(('', port))
+        sock.close()
+        sock = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
+        sock.bind(('', port))
+        sock.close()
+    except OSError as ex:
+        if ex.errno != errno.EADDRINUSE:
+            raise
+        return True
+    return False
+
+
+data = json.load(sys.stdin)
+
+lms_web_stream_port = data["lms_web_stream_port"]
+lms_discovery_port = "3483"
+lms_cli_port = "9090"
+
+ports_in_use = []
+if lms_web_stream_port != os.environ.get("LMS_WEB_STREAM_PORT", "") and isPortInUse(lms_web_stream_port):
+    ports_in_use.append(lms_web_stream_port)
+
+if lms_discovery_port != os.environ.get("LMS_DISCOVERY_PORT", "") and isPortInUse(lms_discovery_port):
+    ports_in_use.append(lms_discovery_port)
+
+if lms_cli_port != os.environ.get("LMS_CLI_PORT", "") and isPortInUse(lms_cli_port):
+    ports_in_use.append(lms_cli_port)
+
+if ports_in_use:
+    print(f"Following ports are already in use: {ports_in_use}", file=sys.stderr)
+    sys.exit(1)
+
+agent.set_env("LMS_WEB_STREAM_PORT", lms_web_stream_port)
+agent.set_env("LMS_DISCOVERY_PORT", lms_discovery_port)
+agent.set_env("LMS_CLI_PORT", lms_cli_port)
+
+# set error validation
+agent.set_weight(os.path.basename(__file__), 0)
+
+# Make sure everything is saved inside the environment file
+# just before starting systemd unit
+agent.dump_env()

@@ -24,7 +24,7 @@
         "title": "Settings",
         "configure_instance": "Configure {instance}",
         "save": "Save",
-        "test_field": "Test field"
+        "lms_web_stream_port": "Logitech Media Server HTTP Port"
     },
     "about": {
         "title": "About"
