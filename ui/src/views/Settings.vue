@@ -24,14 +24,16 @@
         <cv-tile light>
           <cv-form @submit.prevent="configureModule">
             <!-- TODO remove test field and code configuration fields -->
-            <cv-text-input
+            <cv-number-input
               :label="$t('settings.lms_web_stream_port')"
               v-model="lms_web_stream_port"
               :placeholder="$t('settings.lms_web_stream_port')"
               :disabled="loading.getConfiguration || loading.configureModule"
               :invalid-message="error.lmsWebStreamPort"
               ref="lms_web_stream_port"
-            ></cv-text-input>
+              :min=1024
+              :max=65535
+            ></cv-number-input>
             <cv-row v-if="error.configureModule">
               <cv-column>
                 <NsInlineNotification
@@ -85,7 +87,7 @@ export default {
         page: "settings",
       },
       urlCheckInterval: null,
-      lms_web_stream_port: "9000", // TODO remove
+      lms_web_stream_port: 9000, // TODO remove
       loading: {
         getConfiguration: false,
         configureModule: false,
@@ -161,7 +163,7 @@ export default {
       const config = taskResult.output;
 
       // TODO set configuration fields
-      this.lms_web_stream_port = config.lms_web_stream_port.toString(); 
+      this.lms_web_stream_port = config.lms_web_stream_port; 
 
       // TODO remove
       console.log("config", config);
