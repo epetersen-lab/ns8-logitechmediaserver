@@ -3,7 +3,7 @@
   "description": {
     "en": "Logitech Media Server module"
   },
-  "categories": [],
+  "categories": ["Audio"],
   "authors": [
     {
       "name": "Erik Petersen",
