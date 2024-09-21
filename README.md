@@ -1,15 +1,22 @@
 # ns8-logitechmediaserver
 
+## Warning
+This is currently alpha stage.
+Currently there is no nice way to add/upload your media files to the instance, so out of the box
+it will only stream remote resources such as internet radio.
+If you know how you can upload files to your NS8 and move the into the 'music' volume of the instance.
+
+
 This module provides the [Logitech Media Server](https://hub.docker.com/r/lmscommunity/logitechmediaserver) for Nethserver 8.
 
 The module is currently not utilizing Traefik proxy and uses fixed host port mapping, this means they have to be available.
 For this reason only one instance per node is possible.
 
 Ports mappings:
-- 9000:9000/tcp
-- 9090:9090/tcp
-- 3483:3483/tcp
-- 3483:3483/udp
+- 9000:9000/tcp   Configurable
+- 9090:9090/tcp   Fixed
+- 3483:3483/tcp   Fixed
+- 3483:3483/udp   Fixed
 
 ## Install
 
