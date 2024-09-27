@@ -1,10 +1,14 @@
 # ns8-logitechmediaserver
 
 ## Warning
-This is currently alpha stage.
-Currently there is no nice way to add/upload your media files to the instance, so out of the box
-it will only stream remote resources such as internet radio.
-If you know how you can upload files to your NS8 and move the into the 'music' volume of the instance.
+- This is currently alpha stage.
+- Currently there is no nice way to add/upload your media files to the instance, out of the box
+  it will only stream remote resources such as internet radio.
+- If you know how to upload music files to your NS8 and move the into the 'music' volume of the instance
+  and set the correct permissions, you can stream those as well.
+- Currently i am working on adding SFTPGo service for direct access to the 'music' volume.
+- The web interface is currently plain HTTP.
+- The web interface is not protected by authentication. This can be setup from within the LMS web interface.
 
 
 This module provides the [Logitech Media Server](https://hub.docker.com/r/lmscommunity/logitechmediaserver) for Nethserver 8.
